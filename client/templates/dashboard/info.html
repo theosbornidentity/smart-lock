@@ -1,0 +1,31 @@
+<template name="info">
+  <div class="panel">
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#lock-information" data-toggle="tab">Lock Information</a></li>
+      <li><a href="#users" data-toggle="tab">Users</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active well" id="lock-information">
+        <p>You are currently on a psuedo-lock server.</p>
+        <ul>
+          <li>Accounts can still be created by any user</li>
+          <li>Lock activity is simulated</li>
+        </ul>
+      </div>
+      <div class="tab-pane well" id="users">
+        <ul class="list-group">
+          {{#each users}}
+            {{> userInfo}}
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="userInfo">
+  <li class="list-group-item">
+    {{getInfo}}
+    <button class="btn btn-xs btn-danger pull-right deleteUser"><span class="fa fa-trash"></span></button>
+  </li>
+</template>

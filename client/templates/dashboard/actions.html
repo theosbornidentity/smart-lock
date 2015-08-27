@@ -1,0 +1,28 @@
+<template name="actions">
+  <div class="btn-group btn-group-justified">
+    <a href="#" class="btn btn-default col-sm-3 unlock" style="color: #66bb6a">
+      <i class="fa fa-unlock"></i> <br> Unlock
+    </a>
+    <a href="#" class="btn btn-default col-sm-3 lock" style="color: #e57373">
+      <i class="fa fa-lock"></i> <br> Lock
+    </a>
+    <a href="#" class="btn btn-default col-sm-3 addUser" style="color: #64b5f6">
+      <i class="fa fa-plus"></i> <br> Add User
+    </a>
+    <a href="#" class="btn btn-default col-sm-3 disable">
+      <i class="fa fa-ban"></i> <br> Disable
+    </a>
+  </div>
+
+  {{#if showUserForm}}
+    {{> addUserForm}}
+  {{/if}}
+</template>
+
+<template name="addUserForm">
+  <div class="panel">
+    <div class="panel-body">
+      {{> quickForm schema=addUserFormSchema id="addUserForm" type="method" meteormethod="createUserFromAdmin"}}
+    </div>
+  </div>
+</template>
