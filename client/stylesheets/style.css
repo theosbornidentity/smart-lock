@@ -12,3 +12,10 @@
     font-size: 60px;
     font-weight: 100;
 }
+
+.log{
+  position:relative;
+}
+.log.animate{
+  transition:all 300ms 0ms ease-in;
+}

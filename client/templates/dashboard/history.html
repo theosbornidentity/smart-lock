@@ -9,17 +9,17 @@
           <th class="col-md-4">Time</th>
         </tr>
       </thead>
-      <tbody>
-        {{#each logs}}
-          {{> log}}
-        {{/each}}
+      <tbody class="wrapper">
+          {{#each logs}}
+            {{> log}}
+          {{/each}}
       </tbody>
     </table>
   </div>
 </template>
 
 <template name="log">
-  <tr class="{{getStyle}}">
+  <tr class="{{getStyle}} log">
       <td class="col-md-4">{{action}}</td>
       <td class="col-md-4">{{user}}</td>
       <td class="col-md-4">{{getTime}}</td>
