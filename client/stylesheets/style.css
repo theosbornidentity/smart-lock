@@ -19,3 +19,14 @@
 .log.animate{
   transition:all 300ms 0ms ease-in;
 }
+
+@media screen and (max-width: 768px) {
+  input#login-email, input#login-password, input#forgot-password-email,
+    input#login-firstName, input#login-lastName,
+    #login-dropdown-list > div > div > label {
+      color: white;
+  }
+  div#login-other-options a {
+    color: white;
+  }
+}
