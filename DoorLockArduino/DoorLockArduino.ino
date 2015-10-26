@@ -17,6 +17,8 @@ int unlockCommand = -1;
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
 
+boolean lastStatus;
+
 void setup() 
 { 
   Serial.begin(9600);
@@ -44,7 +46,7 @@ void setup()
   //set up current status
   delay(200); //wait 200 ms
   isLocked = true; //say the lock is locked
-
+  lastStatus = true;
   // reserve 200 bytes for the inputString:
   inputString.reserve(200);
   Serial.println("Startup completed");
@@ -54,6 +56,7 @@ void setup()
  
 void loop() 
 { 
+  lastStatus = isLocked;
   int currentAnalog = analogRead(potPin); //get the current position (should be near 0 if not moving)
   if (currentAnalog > 30) { //if the potentiometer has moved (data is invalid, but tells us it's moving)
     
@@ -119,6 +122,11 @@ void loop()
    analogWrite(6, 0);
    analogWrite(5, 120); 
   }
+
+  if (lastStatus != isLocked) {
+    Serial.println(isLocked ? 1 : -1);
+  }
+  
   delay(50);
 }
 

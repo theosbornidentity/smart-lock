@@ -2,11 +2,11 @@
 Note: tried to make an array in history.js to keep track of all filtered logs depending on the query.
 */
 
-var filteredlogs = new Array();
+var filteredlogs = [];
 
 /*
-Note: tried to make populate the filtered logs depending on the query in the dropdown menu. Would match the 
-name in the dropdown menu (first + last name) with name from the log <- 
+Note: tried to make populate the filtered logs depending on the query in the dropdown menu. Would match the
+name in the dropdown menu (first + last name) with name from the log <-
 I assumed the name would be firstName + " " lastName in the log. Essentially matching name Strings between all the logs
 and the dropdown menu.
 */
@@ -23,11 +23,11 @@ function populateFilteredLogs() {
       filteredlogs.push(logs[i]);
     }
   }
-  
+
 }
 
 /*
-Note: Referenced the Template.log.helpers for this one. I used this primarily to populate the dropdown menu with first/last names needed. 
+Note: Referenced the Template.log.helpers for this one. I used this primarily to populate the dropdown menu with first/last names needed.
 */
 
 Template.uInfo.helpers({
@@ -38,7 +38,7 @@ Template.uInfo.helpers({
 
 
 /*
-could not seem to use Template.log.helpers to populate the table in the "User History" tab so I made a new tab. 
+could not seem to use Template.log.helpers to populate the table in the "User History" tab so I made a new tab.
 */
 Template.filteredlog.helpers({
   getStyle: function() {
@@ -49,7 +49,7 @@ Template.filteredlog.helpers({
           return 'danger';
       default:
           return 'default';
-    };
+    }
   },
   getTime: function() {
     return moment(this.date).calendar();
@@ -65,7 +65,7 @@ Template.history.onRendered(function () {
         .insertBefore(next)
         .fadeIn();
     }
-  }
+  };
 });
 
 Template.log.helpers({
@@ -77,11 +77,9 @@ Template.log.helpers({
           return 'danger';
       default:
           return 'default';
-    };
+    }
   },
   getTime: function() {
     return moment(this.date).calendar();
   }
 });
-
-
