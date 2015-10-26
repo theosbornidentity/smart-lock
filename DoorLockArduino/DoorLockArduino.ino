@@ -11,15 +11,17 @@ int unlock = 0;
 int lockPosition;
 int unlockPosition;
 
+int lockCommand = 1;
+int unlockCommand = -1;
+
+String inputString = "";         // a string to hold incoming data
+boolean stringComplete = false;  // whether the string is complete
 
 void setup() 
 { 
   Serial.begin(9600);
-
+  Serial.println("SmartLock v1.0b startup...");
   //set up pins
-  pinMode(2, INPUT); //lock from pi
-  pinMode(7, INPUT); //unlock from pi
-  pinMode(4, OUTPUT); //lock status output to pi
   pinMode(8, INPUT); //button
   pinMode(10, OUTPUT); //motor on/off switch
   pinMode(3, OUTPUT); //red led
@@ -43,6 +45,9 @@ void setup()
   delay(200); //wait 200 ms
   isLocked = true; //say the lock is locked
 
+  // reserve 200 bytes for the inputString:
+  inputString.reserve(200);
+  Serial.println("Startup completed");
   
 } 
  
@@ -62,15 +67,30 @@ void loop()
   }
   
   //raspi control
-  boolean lock = digitalRead(2); //if the pi asked for lock
-  boolean unlock = digitalRead(7); //if the pi asked for unlock
-  if (isLocked == false && lock == true) { //lock takes precedence
-    isLocked = true;
-    lockDoor(); //actually turn the lock
+
+  serialEvent();
+  if (stringComplete) {
+    int intValue = inputString.toInt();
+    if (intValue == lockCommand) {
+      isLocked = true;
+      lockDoor(); //actually turn the lock
+      Serial.println(1);
+    } else if (intValue == unlockCommand) {
+      isLocked = false;
+      unlockDoor(); //actually turn the lock
+      Serial.println(-1);
+    } else {
+          char charValue = inputString.charAt(0);
+          if (charValue == 's' || charValue == 'S') {
+            Serial.println(isLocked ? 1 : -1);
+          }
+    }
+
+
     
-  } else if (isLocked == true && unlock == true && lock == false) { //unlock only if unlock is the only thing turned on
-    isLocked = false;
-    unlockDoor(); //actually turn the lock
+    // clear the string:
+    inputString = "";
+    stringComplete = false;
   }
   
 
@@ -96,8 +116,8 @@ void loop()
    analogWrite(5, 0); 
   } else { //unlocked = green
    analogWrite(3, 0);
-   analogWrite(6, 120);
-   analogWrite(5, 0); 
+   analogWrite(6, 0);
+   analogWrite(5, 120); 
   }
   delay(50);
 }
@@ -137,7 +157,6 @@ void lockDoor() {
   myservo.write(90); //turn the motor
   delay(2000); //wait for motor to turn
   digitalWrite(10, LOW); //turn off motor
-  digitalWrite(4, true); //update pi status pin
   delay(200);
 }
 
@@ -148,6 +167,20 @@ void unlockDoor() {
   myservo.write(0); //turn the motor
   delay(2000); //wait for motor to turn
   digitalWrite(10, LOW); //turn off the motor
-  digitalWrite(4, false); //update pi status pin
   delay(200);
+}
+
+//loads in any serial event
+void serialEvent() {
+  while (Serial.available()) {
+    // get the new byte:
+    char inChar = (char)Serial.read();
+    // add it to the inputString:
+    inputString += inChar;
+    // if the incoming character is a newline, set a flag
+    // so the main loop can do something about it:
+    if (inChar == '\n') {
+      stringComplete = true;
+    }
+  }
 }
