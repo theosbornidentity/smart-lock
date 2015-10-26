@@ -1,24 +1,87 @@
 <template name="history">
   <a href="#"><strong><i class="fa fa-clock-o"></i> History</strong></a><hr>
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th class="col-md-4">Action</th>
-          <th class="col-md-4">User</th>
-          <th class="col-md-4">Time</th>
-        </tr>
-      </thead>
-      <tbody class="wrapper">
-          {{#each logs}}
-            {{> log}}
-          {{/each}}
-      </tbody>
-    </table>
-  </div>
+    <div class="panel">
+      
+      <!-- made tabs to allow for two options: ALL History and SPECIFIC individual history -->
+      <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#all-history" data-toggle="tab">Lock History</a></li>
+
+        <!-- new tab for specific user history -->
+        <li><a href="#specific-user-history" data-toggle="tab">User History</a></li>
+
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active well" id="all-history">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="col-md-4">Action</th>
+                  <th class="col-md-4">User</th>
+                  <th class="col-md-4">Time</th>
+                </tr>
+              </thead>
+              <tbody class="wrapper">
+                  {{#each logs}}
+                    {{> log}}
+                  {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane well" id="specific-user-history">
+
+
+        <!-- dropdown, using new template created to populate all user names in dropdown menu -->
+          <select id="userdropdown">
+            {{#each users}}
+              {{> uInfo}}
+            {{/each}}
+          </select>
+
+          <!-- button use to update the table in the specific user history tab -->
+          <button id="demo" onclick="javascript:populateFilteredLogs()">Find!</button>
+
+          <!-- created a new table just as you did up there, except this time ,i wanted to populate it with the specific user history, so I used the filteredlogs array i created in history.js and called the filteredlog template created shown in the comments below. -->
+          <div class="table-responsive">
+            <table id = "myTable" class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="col-md-4">Action</th>
+                  <th class="col-md-4">User</th>
+                  <th class="col-md-4">Time</th>
+                </tr>
+              </thead>
+              <tbody class="wrapper">
+                  {{#each filteredlogs}}
+                    {{> filteredlog}}
+                  {{/each}}
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
 </template>
 
 <template name="log">
+  <tr class="{{getStyle}} log">
+      <td class="col-md-4">{{action}}</td>
+      <td class="col-md-4">{{user}}</td>
+      <td class="col-md-4">{{getTime}}</td>
+  </tr>
+</template>
+
+<!-- template used to return user info. for dropdown menu-->
+<template name="uInfo">
+  <option value= {{getInfo}} > 
+    {{getInfo}}
+   </option>
+</template>
+
+<!-- template used to populate the NEW table in the user history tab with new info.-->
+<template name="filteredlog">
   <tr class="{{getStyle}} log">
       <td class="col-md-4">{{action}}</td>
       <td class="col-md-4">{{user}}</td>
