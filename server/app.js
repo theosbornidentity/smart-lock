@@ -1,4 +1,5 @@
 //configure arduino serial connection
+var SerialPort = Meteor.npmRequire('serialport');
 Meteor.serialPort = new SerialPort.SerialPort('/dev/cu.usbmodem1421', {
   baudrate: 9600,
   parser: SerialPort.parsers.readline('\r\n')

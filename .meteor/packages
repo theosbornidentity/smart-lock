@@ -4,7 +4,6 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
 iron:router
 aldeed:collection2
 aldeed:autoform
@@ -16,4 +15,21 @@ accounts-password
 fortawesome:fontawesome
 momentjs:moment
 sacha:spin
-donaldaverill:serialport
+standard-minifiers
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+session
+jquery
+tracker
+logging
+reload
+random
+ejson
+spacebars
+check
+meteorhacks:npm
+
+
+npm-container
