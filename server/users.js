@@ -1,6 +1,5 @@
 Meteor.methods({
   createUserFromAdmin: function(doc) {
-    console.log("create user");
     var userId = Accounts.createUser({
        email:    doc.email,
        profile: {

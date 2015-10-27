@@ -6,11 +6,9 @@
     </ul>
     <div class="tab-content">
       <div class="tab-pane active well" id="lock-information">
-        <p>You are currently on a psuedo-lock server.</p>
-        <ul>
-          <li>Accounts can still be created by any user</li>
-          <li>Lock activity is simulated</li>
-        </ul>
+        {{#each status}}
+          {{> lockStatus}}
+        {{/each}}
       </div>
       <div class="tab-pane well" id="users">
         <ul class="list-group">
@@ -28,4 +26,8 @@
     {{getInfo}}
     <button class="btn btn-xs btn-danger pull-right deleteUser"><span class="fa fa-trash"></span></button>
   </li>
+</template>
+
+<template name="lockStatus">
+  <h3 style="{{getStyle}}">Status: {{getStatus}}</h3>
 </template>

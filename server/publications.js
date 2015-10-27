@@ -3,5 +3,9 @@ Meteor.publish('logs', function() {
 });
 
 Meteor.publish('users', function() {
-  return Meteor.users.find({})
-})
+  return Meteor.users.find({});
+});
+
+Meteor.publish('status', function() {
+  return Status.find({}, {sort: {date: -1}, limit: 1});
+});
