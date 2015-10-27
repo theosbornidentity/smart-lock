@@ -50,7 +50,7 @@ void setup()
   // reserve 200 bytes for the inputString:
   inputString.reserve(200);
   Serial.println("Startup completed");
-  
+  Serial.println("1"); //send the first status
 } 
  
  
@@ -76,12 +76,14 @@ void loop()
     int intValue = inputString.toInt();
     if (intValue == lockCommand) {
       isLocked = true;
+      lastStatus = isLocked;
       lockDoor(); //actually turn the lock
-      Serial.println(1);
+      
     } else if (intValue == unlockCommand) {
       isLocked = false;
+      lastStatus = isLocked;
       unlockDoor(); //actually turn the lock
-      Serial.println(-1);
+      
     } else {
           char charValue = inputString.charAt(0);
           if (charValue == 's' || charValue == 'S') {
@@ -101,6 +103,7 @@ void loop()
   //button control
   int button = digitalRead(8); //get status of button
   if (button == 1) {
+    Serial.println("buttoned");
     if (isLocked == true) { //button is on and door is locked
        isLocked = false;
        unlockDoor(); //unlock the door
@@ -127,7 +130,7 @@ void loop()
     Serial.println(isLocked ? 1 : -1);
   }
   
-  delay(50);
+  delay(80);
 }
 
 

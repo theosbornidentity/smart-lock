@@ -8,7 +8,6 @@ Meteor.serialPort = new SerialPort.SerialPort('/dev/cu.usbmodem1421', {
 Meteor.sendToSerialPort = function(message) {
     Meteor.serialPort.write(message);
 };
-
 //receive data from arduino
 Meteor.serialPort.on('data', Meteor.bindEnvironment(function(data) {
   if (data === '-1' || data === '1') {
@@ -18,14 +17,22 @@ Meteor.serialPort.on('data', Meteor.bindEnvironment(function(data) {
         date: new Date(),
         action: 'Unlocked'
       });
+      Status.insert({
+        date: new Date(),
+        status: 'Unlocked'
+      });
     } else {
       Logs.insert({
         user: 'Manual',
         date: new Date(),
         action: 'Locked'
       });
+      Status.insert({
+        date: new Date(),
+        status: 'Locked'
+      });
     }
   } else {
-    console.log('message ' + data);
+    console.log('Serial Message: ' + data);
   }
 }));
