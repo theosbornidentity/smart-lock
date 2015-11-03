@@ -16,8 +16,11 @@ Template.history.onRendered(function () {
 Template.history.helpers({
   logs: function() {
     var user = Template.instance().userFilter.get();
-    if(user !== "") return Logs.find({user: user});
-    return Logs.find({});
+    return getAndFilterLogs(user);
+  },
+  hasLogs: function() {
+    var user = Template.instance().userFilter.get();
+    return getAndFilterLogs(user).count() !== 0;
   },
   currentUserFilter: function () {
     var userName = Template.instance().userFilter.get();
@@ -59,5 +62,6 @@ Template.log.helpers({
 });
 
 function getAndFilterLogs(user) {
-
+  if(user !== "") return Logs.find({user: user});
+  return Logs.find({});
 }

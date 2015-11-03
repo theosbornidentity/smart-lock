@@ -22,9 +22,18 @@
         </tr>
       </thead>
       <tbody class="wrapper">
+        {{#if hasLogs}}
           {{#each logs}}
             {{> log}}
           {{/each}}
+        {{else}}
+          <tr class="warning">
+            <td class="col-md-4">No logs found.</td>
+            <td class="col-md-4"></td>
+            <td class="col-md-4"></td>
+          </tr>
+        {{/if}}
+
       </tbody>
     </table>
   </div>
