@@ -1,6 +1,9 @@
 Template.userInfo.helpers({
-  getInfo: function () {
-    return this.profile.firstName + " " + this.profile.lastName + " (" + this.emails[0].address + ")";
+  getName: function () {
+    return this.profile.firstName + " " + this.profile.lastName;
+  },
+  getEmail: function () {
+    return " (" + this.emails[0].address + ")";
   }
 });
 

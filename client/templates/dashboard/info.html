@@ -24,8 +24,12 @@
 </template>
 
 <template name="userInfo">
-  <li class="list-group-item">
-    {{getInfo}}
+  <li class="list-group-item hidden-xs">
+    {{getName}} {{getEmail}}
+    <button class="btn btn-xs btn-danger pull-right deleteUser"><span class="fa fa-minus"></span></button>
+  </li>
+  <li class="list-group-item visible-xs-block">
+    {{getName}}
     <button class="btn btn-xs btn-danger pull-right deleteUser"><span class="fa fa-minus"></span></button>
   </li>
 </template>
