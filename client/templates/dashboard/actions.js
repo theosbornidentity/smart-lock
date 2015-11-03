@@ -25,11 +25,8 @@ Template.actions.events({
     e.preventDefault();
     Session.set('showUserForm', !Session.get('showUserForm'));
   },
-  'click .disable': function(e) {
-    e.preventDefault();
-    Meteor.call('disableLock', function(error) {
-      // Add error handling
-    });
+  'submit #addUserForm': function(e) {
+    Session.set('showUserForm', false);
   }
 });
 
