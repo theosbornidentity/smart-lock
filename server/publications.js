@@ -1,5 +1,9 @@
-Meteor.publish('logs', function() {
-  return Logs.find({});
+Meteor.publish('logs', function(options) {
+  check(options, {
+    sort: Object,
+    limit: Number
+  });
+  return Logs.find({}, options);
 });
 
 Meteor.publish('users', function() {

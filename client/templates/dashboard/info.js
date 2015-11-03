@@ -14,6 +14,12 @@ Template.lockStatus.helpers({
     } else {
       return 'color: #e57373';
     }
+  },
+  getName: function () {
+    return this.profile.firstName + " " + this.profile.lastName;
+  },
+  getEmail: function () {
+    return " (" + this.emails[0].address + ")";
   }
 });
 
