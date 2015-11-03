@@ -15,14 +15,17 @@ Template.history.onRendered(function () {
 
 Template.history.helpers({
   logs: function() {
-    var userName = Template.instance().userFilter.get();
-    if(userName === '') return Logs.find({}, {sort: {date: -1}});
-    return Logs.find({user: userName}, {sort: {date: -1}});
+    var user = Template.instance().userFilter.get();
+    if(user !== "") return Logs.find({user: user});
+    return Logs.find({});
   },
   currentUserFilter: function () {
     var userName = Template.instance().userFilter.get();
     if(userName === '') return "Users";
     else return 'User: ' + userName;
+  },
+  nextPath: function() {
+    return this.logsLimit + 5;
   }
 });
 
@@ -54,3 +57,7 @@ Template.log.helpers({
     return moment(this.date).calendar();
   }
 });
+
+function getAndFilterLogs(user) {
+
+}
