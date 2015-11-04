@@ -8,4 +8,4 @@ Meteor.publish('logs', function(options) {
 
 Meteor.publish('users', function() {
   return Meteor.users.find({});
-})
+});
