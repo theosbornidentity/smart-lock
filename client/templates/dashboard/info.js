@@ -1,20 +1,21 @@
-Template.userInfo.helpers({
-  getInfo: function () {
-    return this.profile.firstName + " " + this.profile.lastName + " (" + this.emails[0].address + ")";
-  },
-});
-Template.lockStatus.helpers({
+Template.info.helpers({
   getStatus: function() {
-    return this.status;
+    var lastLog = getLastLog();
+    return lastLog.action.toLowerCase();
   },
   getStyle: function() {
-    if (this.status === 'Unlocked') {
-      return 'color: #66bb6a';
-
-    } else {
-      return 'color: #e57373';
+    switch(getLastLog().action) {
+      case 'Unlocked':
+          return 'color: #66bb6a';
+      case 'Locked':
+          return 'color: #e57373';
+      default:
+          return '';
     }
-  },
+  }
+});
+
+Template.userInfo.helpers({
   getName: function () {
     return this.profile.firstName + " " + this.profile.lastName;
   },
@@ -31,3 +32,7 @@ Template.userInfo.events({
     });
   }
 });
+
+function getLastLog() {
+  return Logs.findOne({}, {sort: {date: -1}});
+}

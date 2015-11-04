@@ -60,11 +60,8 @@ Template.log.helpers({
     return moment(this.date).calendar();
   }
 });
-<<<<<<< HEAD
-=======
 
 function getAndFilterLogs(user) {
-  if(user !== "") return Logs.find({user: user});
-  return Logs.find({});
+  if(user !== "") return Logs.find({user: user}, {sort: {date: -1}});
+  return Logs.find({}, {sort: {date: -1}});
 }
->>>>>>> badb4072e9ace85421b7c9d3d48afb7958c901ac

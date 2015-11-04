@@ -37,3 +37,11 @@
     color: white;
   }
 }
+
+#user-dropdown {
+  list-style-type: none;
+}
+
+#user-dropdown-label {
+  color: #666666;
+}

@@ -6,9 +6,10 @@
     </ul>
     <div class="tab-content">
       <div class="tab-pane active well" id="lock-information">
-        {{#each status}}
-          {{> lockStatus}}
-        {{/each}}
+        <p>You are currently on a demo lock server.</p>
+        <ul>
+          <li>Your lock is currently <b style="{{getStyle}}">{{getStatus}}.</b></li>
+        </ul>
       </div>
       <div class="tab-pane well" id="users">
         <ul class="list-group">
@@ -30,8 +31,4 @@
     {{getName}}
     <button class="btn btn-xs btn-danger pull-right deleteUser"><span class="fa fa-minus"></span></button>
   </li>
-</template>
-
-<template name="lockStatus">
-  <h3 style="{{getStyle}}">Status: {{getStatus}}</h3>
 </template>
