@@ -2,7 +2,9 @@
   <div class="panel">
     <ul class="nav nav-tabs" id="myTab">
       <li class="active"><a href="#lock-information" data-toggle="tab">Lock Information</a></li>
-      <li><a href="#users" data-toggle="tab">User Permissions</a></li>
+      {{#if isInRole 'owner'}}
+        <li><a href="#users" data-toggle="tab">User Permissions</a></li>
+      {{/if}}
     </ul>
     <div class="tab-content">
       <div class="tab-pane active well" id="lock-information">
@@ -11,6 +13,7 @@
           <li>Your lock is currently <b style="{{getStyle}}">{{getStatus}}.</b></li>
         </ul>
       </div>
+      {{#if isInRole 'owner'}}
       <div class="tab-pane well" id="users">
         <ul class="list-group">
           {{#each users}}
@@ -18,6 +21,7 @@
           {{/each}}
         </ul>
       </div>
+      {{/if}}
     </div>
   </div>
 </template>

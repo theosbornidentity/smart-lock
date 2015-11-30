@@ -5,6 +5,10 @@ Template.actions.onRendered(function() {
 Template.actions.helpers({
   showUserForm: function () {
     return Session.get('showUserForm');
+  },
+  locked: function () {
+    var lastLog = getLastLog();
+    return lastLog.action.toLowerCase() === 'locked';
   }
 });
 
@@ -26,6 +30,9 @@ Template.actions.events({
     Session.set('showUserForm', !Session.get('showUserForm'));
   },
   'submit #addUserForm': function(e) {
+    Session.set('showUserForm', false);
+  },
+  'submit #addPinForm': function(e) {
     Session.set('showUserForm', false);
   }
 });
@@ -49,3 +56,7 @@ Template.addUserForm.helpers({
     });
   }
 });
+
+function getLastLog() {
+  return Logs.findOne({}, {sort: {date: -1}});
+}

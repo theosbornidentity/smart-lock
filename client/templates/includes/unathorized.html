@@ -1,0 +1,7 @@
+<template name="unauthorized">
+  <div class="access-denied page jumbotron">
+    <h2>Authorization Required</h2>
+    <p>Please enter your four digit pin.</p>
+    {{> quickForm schema=validatePinFormSchema id="validatePinForm" type="method" meteormethod="validatePin"}}
+  </div>
+</template>

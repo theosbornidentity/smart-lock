@@ -1,14 +1,19 @@
 <template name="actions">
   <div class="btn-group btn-group-justified">
-    <a href="#" class="btn btn-default col-sm-4 unlock" style="color: #66bb6a">
-      <i class="fa fa-unlock"></i> <br> Unlock
-    </a>
-    <a href="#" class="btn btn-default col-sm-4 lock" style="color: #e57373">
-      <i class="fa fa-lock"></i> <br> Lock
-    </a>
-    <a href="#" class="btn btn-default col-sm-4 addUser" style="color: #64b5f6">
-      <i class="fa fa-plus"></i> <br> Add User
-    </a>
+    {{#if locked}}
+      <a href="#" class="btn btn-default col-sm-6 unlock" style="color: #66bb6a">
+        <i class="fa fa-unlock"></i> <br> Unlock
+      </a>
+    {{else}}
+      <a href="#" class="btn btn-default col-sm-6 lock" style="color: #e57373">
+        <i class="fa fa-lock"></i> <br> Lock
+      </a>
+    {{/if}}
+    {{#if isInRole 'owner'}}
+      <a href="#" class="btn btn-default col-sm-6 addUser" style="color: #64b5f6">
+        <i class="fa fa-plus"></i> <br> Add User
+      </a>
+    {{/if}}
   </div>
 
   {{#if showUserForm}}
@@ -20,6 +25,8 @@
   <div class="panel">
     <div class="panel-body">
       {{> quickForm schema=addUserFormSchema id="addUserForm" type="method" meteormethod="createUserFromAdmin"}}
+      <hr>
+      {{> quickForm collection="Pins" id="addPinForm" type="insert"}}
     </div>
   </div>
 </template>
