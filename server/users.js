@@ -19,5 +19,17 @@ Meteor.methods({
       Pins.remove(thisPin);
       Roles.addUsersToRoles(Meteor.userId(), ['authorizedUser']);
     }
+  },
+  promote: function(doc) {
+    if(Meteor.user()) Roles.addUsersToRoles(doc._id, 'owner');
+  },
+  demote: function(doc) {
+    if(Meteor.user()) Roles.removeUsersFromRoles(doc._id, 'owner');
+  },
+  disableUser: function(doc) {
+    if(Meteor.user()) Roles.addUsersToRoles(doc._id, 'disabled');
+  },
+  enableUser: function(doc) {
+    if(Meteor.user()) Roles.removeUsersFromRoles(doc._id, 'disabled');
   }
 });

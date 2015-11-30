@@ -29,10 +29,34 @@
 <template name="userInfo">
   <li class="list-group-item hidden-xs">
     {{getName}} {{getEmail}}
-    <button class="btn btn-xs btn-danger pull-right deleteUser"><span class="fa fa-minus"></span></button>
+    <div class="btn-group pull-right">
+      {{#if isOwner}}
+        <button class="btn btn-xs btn-default demote" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Demote"><span class="fa fa-minus" style="color:#ffe0b2"></span></button>
+      {{else}}
+        <button class="btn btn-xs btn-default promote" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Promote to owner"><span class="fa fa-star" style="color:#ffe0b2"></span></button>
+      {{/if}}
+      {{#if isDisabled}}
+        <button class="btn btn-xs btn-default enable" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enable user"><span class="fa fa-power-off" style="color:#bbbbbb"></span></button>
+      {{else}}
+        <button class="btn btn-xs btn-default disable" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Disable user"><span class="fa fa-ban" style="color:#bbbbbb"></span></button>
+      {{/if}}
+     <button class="btn btn-xs btn-default deleteUser" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Delete user"><span class="fa fa-trash" style="color:#f9bdbb"></span></button>
+    </div>
   </li>
   <li class="list-group-item visible-xs-block">
     {{getName}}
-    <button class="btn btn-xs btn-danger pull-right deleteUser"><span class="fa fa-minus"></span></button>
+    <div class="btn-group pull-right">
+      {{#if isOwner}}
+        <button class="btn btn-xs btn-default demote" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Demote"><span class="fa fa-minus" style="color:#ffe0b2"></span></button>
+      {{else}}
+        <button class="btn btn-xs btn-default promote" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Promote to owner"><span class="fa fa-star" style="color:#ffe0b2"></span></button>
+      {{/if}}
+      {{#if isDisabled}}
+        <button class="btn btn-xs btn-default enable" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enable user"><span class="fa fa-power-off" style="color:#bbbbbb"></span></button>
+      {{else}}
+        <button class="btn btn-xs btn-default disable" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Disable user"><span class="fa fa-ban" style="color:#bbbbbb"></span></button>
+      {{/if}}
+     <button class="btn btn-xs btn-default deleteUser" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Delete user"><span class="fa fa-trash" style="color:#f9bdbb"></span></button>
+    </div>
   </li>
 </template>
