@@ -1,11 +1,11 @@
-#include <Servo.h> 
- 
-Servo myservo;  // create servo object to control a servo 
+#include <Servo.h>
+
+Servo myservo;  // create servo object to control a servo
  //90 = 355 - 385
  //0 = 70-90
-boolean isLocked;
-int potPin = A0;
-int pos = 90;
+boolean isLocked; //whether the lock is currently locked or not
+int potPin = A0; //pin the potentiometer is connected to
+int pos = 90; //current lock position reading
 int lock = 0;
 int unlock = 0;
 int lockPosition;
@@ -19,8 +19,8 @@ boolean stringComplete = false;  // whether the string is complete
 
 boolean lastStatus;
 
-void setup() 
-{ 
+void setup()
+{
   Serial.begin(9600);
   Serial.println("SmartLock v1.0b startup...");
   //set up pins
@@ -30,7 +30,7 @@ void setup()
   pinMode(6, OUTPUT); //green led
   pinMode(5, OUTPUT); //blue led
   analogWrite(5, 120); //show setup led
-  myservo.attach(11);  // attaches the servo on pin 11 to the servo object 
+  myservo.attach(11);  // attaches the servo on pin 11 to the servo object
 
 
   //calibrate the positions
@@ -51,15 +51,15 @@ void setup()
   inputString.reserve(200);
   Serial.println("Startup completed");
   Serial.println("1"); //send the first status
-} 
- 
- 
-void loop() 
-{ 
+}
+
+
+void loop()
+{
   lastStatus = isLocked;
   int currentAnalog = analogRead(potPin); //get the current position (should be near 0 if not moving)
   if (currentAnalog > 30) { //if the potentiometer has moved (data is invalid, but tells us it's moving)
-    
+
     delay(200); //wait for it to settle down
     digitalWrite(10, HIGH); //turn on the motor to get a valid reading from POT
     delay(100); //wait again for voltage to settle
@@ -68,7 +68,7 @@ void loop()
     digitalWrite(10, LOW); //turn off the motor
     delay(200); //wait for motor to fully turn off
   }
-  
+
   //raspi control
 
   serialEvent();
@@ -78,12 +78,12 @@ void loop()
       isLocked = true;
       lastStatus = isLocked;
       lockDoor(); //actually turn the lock
-      
+
     } else if (intValue == unlockCommand) {
       isLocked = false;
       lastStatus = isLocked;
       unlockDoor(); //actually turn the lock
-      
+
     } else {
           char charValue = inputString.charAt(0);
           if (charValue == 's' || charValue == 'S') {
@@ -92,14 +92,14 @@ void loop()
     }
 
 
-    
+
     // clear the string:
     inputString = "";
     stringComplete = false;
   }
-  
 
-  
+
+
   //button control
   int button = digitalRead(8); //get status of button
   if (button == 1) {
@@ -107,11 +107,11 @@ void loop()
     if (isLocked == true) { //button is on and door is locked
        isLocked = false;
        unlockDoor(); //unlock the door
-       
+
     } else if (isLocked == false) { //button is on and door is unlocked
        isLocked = true;
        lockDoor(); //lock the door
-       
+
     }
   }
 
@@ -119,17 +119,17 @@ void loop()
   if (isLocked == true) { //locked = red
    analogWrite(3, 120);
    analogWrite(6, 0);
-   analogWrite(5, 0); 
+   analogWrite(5, 0);
   } else { //unlocked = green
    analogWrite(3, 0);
    analogWrite(6, 0);
-   analogWrite(5, 120); 
+   analogWrite(5, 120);
   }
 
   if (lastStatus != isLocked) {
     Serial.println(isLocked ? 1 : -1);
   }
-  
+
   delay(80);
 }
 
@@ -139,15 +139,15 @@ boolean checkIsLocked() {
   int i = 0;
   do {
     int analogIn = analogRead(potPin); //get the current POT position
-    
-    
+
+
     int unlockedDifference = unlockPosition - analogIn; //find difference between unlocked position and current position
     if (unlockedDifference < 0) { //make unlocked difference positive
-     unlockedDifference *= -1; 
+     unlockedDifference *= -1;
     }
     int lockedDifference = lockPosition - analogIn; //find the difference between locked position and current position
     if (lockedDifference < 0) { //make locked difference positive
-     lockedDifference *= -1; 
+     lockedDifference *= -1;
     }
     if (unlockedDifference < 30) { //if the difference from the unlocked position is close, return unlocked
        return  false;

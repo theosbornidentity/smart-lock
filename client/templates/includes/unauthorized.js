@@ -1,4 +1,5 @@
 Template.unauthorized.helpers({
+  //handles pin form
   validatePinFormSchema: function () {
     return new SimpleSchema({
         pin: {
